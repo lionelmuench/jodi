@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jodi</title>
+  <title>MOTHERS DAY!</title>
   <style>
     body, html {
       margin: 0;
@@ -11,6 +11,8 @@
       overflow: hidden;
       height: 100%;
       width: 100%;
+      font-family: sans-serif;
+      background: black;
     }
 
     .curtain {
@@ -18,7 +20,13 @@
       top: 0;
       height: 100%;
       width: 50%;
-      background: #800000;
+      background: repeating-linear-gradient(
+        to right,
+        #800000 0px,
+        #8B0000 20px,
+        #800000 40px
+      );
+      box-shadow: inset -10px 0 15px rgba(0,0,0,0.5);
       z-index: 2;
       transition: transform 3s ease;
     }
@@ -26,11 +34,13 @@
     .left-curtain {
       left: 0;
       transform: translateX(0);
+      border-right: 2px solid #600000;
     }
 
     .right-curtain {
       right: 0;
       transform: translateX(0);
+      border-left: 2px solid #600000;
     }
 
     .open .left-curtain {
@@ -45,35 +55,67 @@
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url('your-image.jpg'); /* replace with actual image path */
-      background-size: cover;
+      width: 90%;
+      height: 90%;
+      background-image: url('your-image.png');
+      background-size: contain;
+      background-repeat: no-repeat;
       background-position: center;
       z-index: 1;
+      transition: transform 0.5s ease-in-out;
+      margin: auto;
+      right: 0;
+      bottom: 0;
+    }
+
+    .dance {
+      animation: dance 0.4s infinite alternate;
+    }
+
+    @keyframes dance {
+      0% { transform: translate(-5px, -5px) rotate(-1deg); }
+      100% { transform: translate(5px, 5px) rotate(1deg); }
+    }
+
+    #play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      background: #ffffffaa;
+      border: none;
+      padding: 15px 30px;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 8px;
     }
   </style>
 </head>
 <body>
+  <button id="play-button">▶ Play</button>
   <div class="curtain left-curtain"></div>
   <div class="curtain right-curtain"></div>
-  <div class="reveal-image"></div>
+  <div class="reveal-image" id="reveal"></div>
 
-  <audio id="bg-music" src="your-music.mp3" autoplay loop></audio>
+  <audio id="bg-music" src="your-music.mp3" loop></audio>
 
   <script>
-    // Try to play music after user interaction due to browser restrictions
-    window.addEventListener('click', () => {
-      const audio = document.getElementById('bg-music');
-      audio.play().catch(() => {});
-    });
+    const audio = document.getElementById('bg-music');
+    const playButton = document.getElementById('play-button');
+    const revealImage = document.getElementById('reveal');
 
-    // Open the curtains after a short delay
-    window.onload = () => {
+    playButton.addEventListener('click', () => {
+      audio.play().catch(() => {});
+      playButton.style.display = 'none';
+
       setTimeout(() => {
         document.body.classList.add('open');
-      }, 1000);
-    };
+        setTimeout(() => {
+          revealImage.classList.add('dance');
+        }, 3000);
+      }, 2000);
+    });
   </script>
 </body>
 </html>
