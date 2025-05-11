@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jodi</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100%;
+      width: 100%;
+    }
+
+    .curtain {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 50%;
+      background: #800000;
+      z-index: 2;
+      transition: transform 3s ease;
+    }
+
+    .left-curtain {
+      left: 0;
+      transform: translateX(0);
+    }
+
+    .right-curtain {
+      right: 0;
+      transform: translateX(0);
+    }
+
+    .open .left-curtain {
+      transform: translateX(-100%);
+    }
+
+    .open .right-curtain {
+      transform: translateX(100%);
+    }
+
+    .reveal-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('your-image.jpg'); /* replace with actual image path */
+      background-size: cover;
+      background-position: center;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="curtain left-curtain"></div>
+  <div class="curtain right-curtain"></div>
+  <div class="reveal-image"></div>
+
+  <audio id="bg-music" src="your-music.mp3" autoplay loop></audio>
+
+  <script>
+    // Try to play music after user interaction due to browser restrictions
+    window.addEventListener('click', () => {
+      const audio = document.getElementById('bg-music');
+      audio.play().catch(() => {});
+    });
+
+    // Open the curtains after a short delay
+    window.onload = () => {
+      setTimeout(() => {
+        document.body.classList.add('open');
+      }, 1000);
+    };
+  </script>
+</body>
+</html>
